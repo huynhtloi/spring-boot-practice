@@ -2,7 +2,8 @@ package com.training.practice.controller;
 
 import com.training.practice.dto.GreetingRequest;
 import com.training.practice.dto.HelloResponse;
-import com.training.practice.interfaces.GreetingService;
+import com.training.practice.service.GreetingService;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,12 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+// @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api")
 public class HelloController {
 
+    // Field injection with Autowired and @Qualifier
+    // @Autowired
+    // @Qualifier("helloService")
+    // private GreetingService greetingService;
+
     private final GreetingService greetingService;
 
+    // Constructor with @Qualifier
     public HelloController(@Qualifier("helloService") GreetingService greetingService) {
         this.greetingService = greetingService;
     }

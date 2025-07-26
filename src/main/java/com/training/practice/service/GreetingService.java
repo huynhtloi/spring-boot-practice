@@ -1,4 +1,4 @@
-package com.training.practice.interfaces;
+package com.training.practice.service;
 
 import com.training.practice.dto.GreetingRequest;
 

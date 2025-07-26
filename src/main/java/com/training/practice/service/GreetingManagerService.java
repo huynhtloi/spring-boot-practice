@@ -1,6 +1,5 @@
 package com.training.practice.service;
 
-import com.training.practice.interfaces.GreetingService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

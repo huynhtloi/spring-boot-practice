@@ -1,8 +1,9 @@
 package com.training.practice.controller;
 
 import com.training.practice.dto.HelloResponse;
-import com.training.practice.interfaces.GreetingService;
 import com.training.practice.service.GreetingManagerService;
+import com.training.practice.service.GreetingService;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

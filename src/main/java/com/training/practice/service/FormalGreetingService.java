@@ -1,7 +1,7 @@
 package com.training.practice.service;
 
 import com.training.practice.dto.GreetingRequest;
-import com.training.practice.interfaces.GreetingService;
+
 import org.springframework.stereotype.Service;
 
 @Service("formalGreetingService")
