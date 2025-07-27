@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+// Ignore timestamps to hide them, keep subjects visible 
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, ignoreUnknown = true)
 @Entity
 @Table(name = "users")

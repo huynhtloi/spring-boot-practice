@@ -1,7 +1,5 @@
 package com.training.practice.dto;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +14,5 @@ public class SubjectDTO {
     private String name;
     private String description;
     private String code;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    // Removed createdAt and updatedAt to hide timestamps in API responses
 }

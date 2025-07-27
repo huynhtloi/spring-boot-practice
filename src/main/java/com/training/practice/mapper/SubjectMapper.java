@@ -11,7 +11,7 @@ import com.training.practice.entity.Subject;
 @Mapper(componentModel = "spring", 
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface SubjectMapper {
-    // Entity -> DTO (for response purposes) - include timestamps
+    // Entity -> DTO (for response purposes) - timestamps already excluded from DTO
     SubjectDTO toDTO(Subject subject);
     
     // DTO -> Entity (for create operations)
