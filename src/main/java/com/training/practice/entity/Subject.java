@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +20,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, ignoreUnknown = true)
+// @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, ignoreUnknown = true)
 @Entity
 @Table(name = "subjects")
 @Data
