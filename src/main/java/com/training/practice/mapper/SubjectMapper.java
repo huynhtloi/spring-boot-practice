@@ -1,7 +1,9 @@
 package com.training.practice.mapper;
 
+import com.training.practice.dto.SubjectUpdateDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 
 import com.training.practice.dto.SubjectDTO;
@@ -27,4 +29,11 @@ public interface SubjectMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "user", ignore = true)
     Subject createDTOToEntity(SubjectCreateDTO dto);
+
+    // Update existing entity from UpdateDTO (for partial update operations)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    void updateEntityFromUpdateDTO(SubjectUpdateDTO dto, @MappingTarget Subject entity);
 }
