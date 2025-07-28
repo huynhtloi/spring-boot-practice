@@ -98,7 +98,7 @@ public class SubjectController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @ResponseBody
     public ResponseEntity<ApiResponseDTO<SubjectDTO>> updateSubject(
             @PathVariable String id,

@@ -5,13 +5,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.training.practice.dto.SubjectDTO;
 import com.training.practice.dto.SubjectCreateDTO;
 import com.training.practice.entity.Subject;
 
 @Mapper(componentModel = "spring", 
-        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface SubjectMapper {
     // Entity -> DTO (for response purposes) - timestamps already excluded from DTO
     SubjectDTO toDTO(Subject subject);
