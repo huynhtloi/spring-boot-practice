@@ -3,6 +3,7 @@ package com.training.practice.service;
 import com.training.practice.dto.SubjectDTO;
 import com.training.practice.dto.SubjectUpdateDTO;
 import com.training.practice.entity.Subject;
+import com.training.practice.exception.SubjectNotFoundException;
 import com.training.practice.mapper.SubjectMapper;
 import com.training.practice.repository.SubjectRepository;
 import org.springframework.data.domain.Page;
@@ -51,7 +52,7 @@ public class SubjectService {
     public SubjectDTO updateSubject(String id, SubjectUpdateDTO request) {
         log.info("Updating subject with ID: {}", id);
         Subject subject = subjectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subject not found with ID: " + id));
+                .orElseThrow(() -> SubjectNotFoundException.withId(id));
 
         subjectMapper.updateEntityFromUpdateDTO(request, subject);
 

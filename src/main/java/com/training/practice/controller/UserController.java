@@ -201,7 +201,7 @@ public class UserController {
             
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
-            log.error("Error updating user: {}", e.getMessage());
+            log.error(e.getMessage());
             ApiResponseDTO<UserDTO> response = ApiResponseDTO.error(e.getMessage());
             response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
             return ResponseEntity.badRequest().body(response);

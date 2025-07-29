@@ -111,7 +111,7 @@ public class SubjectController {
             ApiResponseDTO<SubjectDTO> response = ApiResponseDTO.success("Subject updated successfully", subjectResponse);
             response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
             return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             log.error("Error updating subject: {}", e.getMessage());
             ApiResponseDTO<SubjectDTO> response = ApiResponseDTO.error(e.getMessage());
             response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());

@@ -6,6 +6,8 @@ import com.training.practice.dto.UserDTO;
 import com.training.practice.dto.UserUpdateDTO;
 import com.training.practice.entity.Subject;
 import com.training.practice.entity.User;
+import com.training.practice.exception.EmailAlreadyExistsException;
+import com.training.practice.exception.UserNotFoundException;
 import com.training.practice.repository.UserRepository;
 import com.training.practice.mapper.UserMapper;
 import com.training.practice.mapper.SubjectMapper;
@@ -34,7 +36,7 @@ public class UserService {
         log.info("Creating user with email: {}", request.getEmail());
         
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists: " + request.getEmail());
+            throw new EmailAlreadyExistsException(request.getEmail());
         }
         
         User user = User.builder()
@@ -109,14 +111,14 @@ public class UserService {
         log.info("Updating user with ID: {}", id);
         
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+                .orElseThrow(() -> UserNotFoundException.withId(id));
         
         // Check for email uniqueness if email is being updated
         if (request.getEmail() != null) {
             userRepository.findByEmail(request.getEmail())
                     .ifPresent(existingUser -> {
                         if (!existingUser.getId().equals(id)) {
-                            throw new RuntimeException("Email already exists: " + request.getEmail());
+                            throw new EmailAlreadyExistsException(request.getEmail());
                         }
                     });
         }
@@ -134,7 +136,7 @@ public class UserService {
         log.info("Adding new subject to user with ID: {}", userId);
         
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+                .orElseThrow(() -> UserNotFoundException.withId(userId));
         
         // Use SubjectMapper to create Subject from CreateDTO
         Subject subject = subjectMapper.createDTOToEntity(request);
@@ -151,7 +153,7 @@ public class UserService {
         log.info("Deleting user with ID: {}", id);
         
         if (!userRepository.existsById(id)) {
-            throw new RuntimeException("User not found with ID: " + id);
+            throw UserNotFoundException.withId(id);
         }
         
         userRepository.deleteById(id);
