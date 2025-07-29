@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -102,20 +103,13 @@ public class SubjectController {
     @ResponseBody
     public ResponseEntity<ApiResponseDTO<SubjectDTO>> updateSubject(
             @PathVariable String id,
-            @RequestBody SubjectUpdateDTO request,
+            @Valid @RequestBody SubjectUpdateDTO request,
             @RequestHeader(value = "X-Request-ID", required = false) String requestId) {
         log.info("Updating subject with ID: {} with request ID: {}", id, requestId);
 
-        try {
-            SubjectDTO subjectResponse = subjectService.updateSubject(id, request);
-            ApiResponseDTO<SubjectDTO> response = ApiResponseDTO.success("Subject updated successfully", subjectResponse);
-            response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error updating subject: {}", e.getMessage());
-            ApiResponseDTO<SubjectDTO> response = ApiResponseDTO.error(e.getMessage());
-            response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
-            return ResponseEntity.badRequest().body(response);
-        }
+        SubjectDTO subjectResponse = subjectService.updateSubject(id, request);
+        ApiResponseDTO<SubjectDTO> response = ApiResponseDTO.success("Subject updated successfully", subjectResponse);
+        response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
+        return ResponseEntity.ok(response);
     }
 }

@@ -45,18 +45,11 @@ public class UserController {
         
         log.info("Creating user with request ID: {} and client version: {}", requestId, clientVersion);
         
-        try {
-            UserDTO userResponse = userService.createUser(request);
-            ApiResponseDTO<UserDTO> response = ApiResponseDTO.success("User created successfully", userResponse);
-            response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
-            
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (RuntimeException e) {
-            log.error("Error creating user: {}", e.getMessage());
-            ApiResponseDTO<UserDTO> response = ApiResponseDTO.error(e.getMessage());
-            response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
-            return ResponseEntity.badRequest().body(response);
-        }
+        UserDTO userResponse = userService.createUser(request);
+        ApiResponseDTO<UserDTO> response = ApiResponseDTO.success("User created successfully", userResponse);
+        response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     
     // READ - GET by ID with @PathVariable
@@ -194,18 +187,11 @@ public class UserController {
         
         log.info("Updating user ID: {} with request ID: {} and client version: {}", id, requestId, clientVersion);
         
-        try {
-            UserDTO userResponse = userService.updateUser(id, request);
-            ApiResponseDTO<UserDTO> response = ApiResponseDTO.success("User updated successfully", userResponse);
-            response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
-            
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            log.error(e.getMessage());
-            ApiResponseDTO<UserDTO> response = ApiResponseDTO.error(e.getMessage());
-            response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
-            return ResponseEntity.badRequest().body(response);
-        }
+        UserDTO userResponse = userService.updateUser(id, request);
+        ApiResponseDTO<UserDTO> response = ApiResponseDTO.success("User updated successfully", userResponse);
+        response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
+        
+        return ResponseEntity.ok(response);
     }
     
     // PARTIAL UPDATE - PATCH with @PathVariable and @RequestParam
@@ -243,18 +229,12 @@ public class UserController {
             @Valid @RequestBody SubjectCreateDTO request,
             @RequestHeader(value = "X-Request-ID", required = false) String requestId) {
         log.info("Adding new subject to user ID: {} with request ID: {}", id, requestId);
-        try {
-            UserDTO userResponse = userService.addNewSubjectToUser(id, request);
-            ApiResponseDTO<UserDTO> response = ApiResponseDTO.success("Subject added to user successfully", userResponse);
-            response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
-            
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            log.error("Error adding new subject to user: {}", e.getMessage());
-            ApiResponseDTO<UserDTO> response = ApiResponseDTO.error(e.getMessage());
-            response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
-            return ResponseEntity.badRequest().body(response);
-        }
+        
+        UserDTO userResponse = userService.addNewSubjectToUser(id, request);
+        ApiResponseDTO<UserDTO> response = ApiResponseDTO.success("Subject added to user successfully", userResponse);
+        response.setRequestId(requestId != null ? requestId : UUID.randomUUID().toString());
+        
+        return ResponseEntity.ok(response);
     }
     
     // DELETE - DELETE with @PathVariable
