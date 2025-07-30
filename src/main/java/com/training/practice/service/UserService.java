@@ -3,6 +3,7 @@ package com.training.practice.service;
 import com.training.practice.dto.SubjectCreateDTO;
 import com.training.practice.dto.UserCreateDTO;
 import com.training.practice.dto.UserDTO;
+import com.training.practice.dto.UserV2DTO;
 import com.training.practice.dto.UserUpdateDTO;
 import com.training.practice.entity.Subject;
 import com.training.practice.entity.User;
@@ -58,6 +59,13 @@ public class UserService {
         log.info("Fetching user by ID: {}", id);
         return userRepository.findById(id)
                 .map(userMapper::toDTO);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<UserV2DTO> getUserByIdV2(String id) {
+        log.info("Fetching user by ID: {}", id);
+        return userRepository.findById(id)
+                .map(userMapper::toV2DTO);
     }
     
     @Transactional(readOnly = true)
@@ -126,7 +134,7 @@ public class UserService {
         // Use MapStruct to update the entity
         userMapper.updateEntityFromUpdateDTO(request, user);
         
-        User updatedUser = userRepository.save(user);
+        User updatedUser = userRepository.saveAndFlush(user);
         log.info("User updated successfully with ID: {}", updatedUser.getId());
         
         return userMapper.toDTO(updatedUser);
@@ -143,7 +151,7 @@ public class UserService {
         subject.setUser(user);
         user.getSubjects().add(subject);
         
-        User updatedUser = userRepository.save(user);
+        User updatedUser = userRepository.saveAndFlush(user);
         log.info("Subject added successfully to user with ID: {}", updatedUser.getId());
         
         return userMapper.toDTO(updatedUser);

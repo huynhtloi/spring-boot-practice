@@ -56,7 +56,7 @@ public class SubjectService {
 
         subjectMapper.updateEntityFromUpdateDTO(request, subject);
 
-        Subject updatedSubject = subjectRepository.save(subject);
+        Subject updatedSubject = subjectRepository.saveAndFlush(subject);
         log.info("Subject updated successfully with ID: {}", updatedSubject.getId());
 
         return subjectMapper.toDTO(updatedSubject);

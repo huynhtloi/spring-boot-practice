@@ -8,6 +8,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.training.practice.dto.UserDTO;
 import com.training.practice.dto.UserUpdateDTO;
+import com.training.practice.dto.UserV2DTO;
 import com.training.practice.entity.User;
 
 @Mapper(componentModel = "spring", 
@@ -17,6 +18,8 @@ public interface UserMapper {
     
     // Entity -> DTO (exclude createdAt, updatedAt - for response purposes)
     UserDTO toDTO(User user);
+
+    UserV2DTO toV2DTO(User user);
 
     // DTO -> Entity (for create operations)
     @Mapping(target = "id", ignore = true)
