@@ -1,0 +1,647 @@
+{
+  "info": {
+    "_postman_id": "spring-boot-postman-client",
+    "name": "🌟 Spring Boot PostmanClient API Collection",
+    "description": "Collection for testing Spring Boot PostmanClient endpoints\n\n## Features:\n- Test your Spring Boot application endpoints\n- All @HttpExchange operations through your controllers\n- Pre-configured authentication\n- Sample requests for all endpoints\n\n## Setup:\n1. Start your Spring Boot app on localhost:8888\n2. Use the generated security password from logs\n3. Test all endpoints through your PostmanController\n\n## Base URL:\nhttp://localhost:8888",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "user",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{spring_security_password}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          "// Auto-generate request ID for tracking",
+          "pm.globals.set('requestId', pm.variables.replaceIn('{{$randomUUID}}'));"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "🔐 Authentication Test",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/actuator/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["actuator", "health"]
+            },
+            "description": "Check if Spring Boot app is running"
+          },
+          "response": []
+        },
+        {
+          "name": "Test Authentication",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/hello",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "hello"]
+            },
+            "description": "Test basic authentication"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "👥 PostmanClient - User Management",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/external/postman/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "external", "postman", "users"]
+            },
+            "description": "Get all users through PostmanClient (@GetExchange)"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "X-Request-ID",
+                    "value": "test-123"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/external/postman/users",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "external", "postman", "users"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Users fetched successfully\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Alice\",\n      \"email\": \"alice@example.com\",\n      \"status\": \"ACTIVE\",\n      \"roles\": {\n        \"admin\": true,\n        \"staff\": false,\n        \"member\": false\n      },\n      \"createdAt\": \"2025-01-01T10:00:00Z\",\n      \"updatedAt\": \"2025-01-15T14:30:00Z\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Bob\",\n      \"email\": \"bob@example.com\",\n      \"status\": \"ACTIVE\",\n      \"roles\": {\n        \"admin\": false,\n        \"staff\": true,\n        \"member\": false\n      },\n      \"createdAt\": \"2025-01-02T11:00:00Z\",\n      \"updatedAt\": \"2025-01-10T16:45:00Z\"\n    }\n  ],\n  \"timestamp\": \"2025-07-31T10:00:00Z\",\n  \"requestId\": \"test-123\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get User By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/external/postman/users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "external", "postman", "users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Get user by ID through PostmanClient (@GetExchange with @PathVariable)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Users By Role",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/external/postman/users/by-role?role=admin",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "external", "postman", "users", "by-role"],
+              "query": [
+                {
+                  "key": "role",
+                  "value": "admin",
+                  "description": "Filter by role (admin, staff, member)"
+                }
+              ]
+            },
+            "description": "Get users by role through PostmanClient (@GetExchange with @RequestParam)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"status\": \"ACTIVE\",\n  \"roles\": {\n    \"admin\": false,\n    \"staff\": true,\n    \"member\": true\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/external/postman/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "external", "postman", "users"]
+            },
+            "description": "Create new user through PostmanClient (@PostExchange with @RequestBody)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice Updated\",\n  \"email\": \"alice.updated@example.com\",\n  \"status\": \"ACTIVE\",\n  \"roles\": {\n    \"admin\": true,\n    \"staff\": true,\n    \"member\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/external/postman/users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "external", "postman", "users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "User ID to update"
+                }
+              ]
+            },
+            "description": "Full update user through PostmanClient (@PutExchange)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"INACTIVE\",\n  \"roles\": {\n    \"admin\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/external/postman/users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "external", "postman", "users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "User ID to partially update"
+                }
+              ]
+            },
+            "description": "Partial update user through PostmanClient (@PatchExchange)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/external/postman/users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "external", "postman", "users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3",
+                  "description": "User ID to delete"
+                }
+              ]
+            },
+            "description": "Delete user through PostmanClient (@DeleteExchange)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🔑 User Permissions & Roles",
+      "item": [
+        {
+          "name": "Get User Permissions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/external/postman/users/:id/permissions",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "external", "postman", "users", ":id", "permissions"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Get user permissions through PostmanClient (@GetExchange)"
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Role to User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/external/postman/users/:id/roles?role=manager",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "external", "postman", "users", ":id", "roles"],
+              "query": [
+                {
+                  "key": "role",
+                  "value": "manager",
+                  "description": "Role to assign (admin, staff, member, manager)"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2",
+                  "description": "User ID"
+                }
+              ]
+            },
+            "description": "Assign role to user through PostmanClient (@PostExchange with @RequestParam)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🏠 Internal APIs (Your App)",
+      "item": [
+        {
+          "name": "Get All Users (Internal)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Get users from your internal database"
+          },
+          "response": []
+        },
+        {
+          "name": "Create User (Internal)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              },
+              {
+                "key": "X-Client-Version",
+                "value": "1.0"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Internal User\",\n  \"email\": \"internal@example.com\",\n  \"age\": 25,\n  \"status\": \"ACTIVE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"]
+            },
+            "description": "Create user in your internal database"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User By ID (Internal)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Internal User ID"
+                }
+              ]
+            },
+            "description": "Get user by ID from your internal database"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "⚙️ Configuration & Health",
+      "item": [
+        {
+          "name": "Get Feature Flags",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/config/features",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "config", "features"]
+            },
+            "description": "Get application feature flags and configuration"
+          },
+          "response": []
+        },
+        {
+          "name": "Toggle Logging",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Request-ID",
+                "value": "{{requestId}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/config/features/logging?enabled=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "config", "features", "logging"],
+              "query": [
+                {
+                  "key": "enabled",
+                  "value": "true",
+                  "description": "Enable or disable logging"
+                }
+              ]
+            },
+            "description": "Toggle application logging feature"
+          },
+          "response": []
+        },
+        {
+          "name": "Application Info",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/actuator/info",
+              "host": ["{{baseUrl}}"],
+              "path": ["actuator", "info"]
+            },
+            "description": "Get application information"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          "// Set request timestamp",
+          "pm.globals.set('timestamp', new Date().toISOString());"
+        ],
+        "type": "text/javascript"
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "exec": [
+          "// Basic response tests",
+          "pm.test('Response time is less than 5000ms', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+          "});",
+          "",
+          "pm.test('Status code is success', function () {",
+          "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+          "});",
+          "",
+          "// Log response for debugging",
+          "if (pm.response.code >= 400) {",
+          "    console.log('Error Response:', pm.response.text());",
+          "}"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8888",
+      "type": "string",
+      "description": "Spring Boot application base URL"
+    },
+    {
+      "key": "spring_security_password",
+      "value": "your-generated-password-here",
+      "type": "string",
+      "description": "Generated Spring Security password from application logs"
+    },
+    {
+      "key": "requestId",
+      "value": "{{$randomUUID}}",
+      "type": "string",
+      "description": "Unique request ID for tracking"
+    }
+  ]
+}

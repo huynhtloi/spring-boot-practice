@@ -40,6 +40,11 @@ custom:
         - PATCH
         - OPTIONS
   
+  postman:
+    profile:
+      host:
+        base-url: https://0726d328-b712-46de-899a-cf35f6f3bebe.mock.pstmn.io
+  
   features:
     enable-logging: true
   
