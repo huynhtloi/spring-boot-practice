@@ -2,9 +2,12 @@ package com.training.practice.service;
 
 import com.training.practice.dto.GreetingRequest;
 
+import lombok.Data;
+
 import org.springframework.stereotype.Service;
 
 @Service("helloService")
+@Data
 public class HelloService implements GreetingService {
 
     public String generateGreeting(String name) {
