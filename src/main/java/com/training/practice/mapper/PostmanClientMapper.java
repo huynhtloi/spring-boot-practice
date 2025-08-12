@@ -40,7 +40,7 @@ public abstract class PostmanClientMapper {
     @AfterMapping
     protected void mapUserPostmanStatus(@MappingTarget PostmanResponse internal) {
         if (internal.getUserPostmanStatus() != null && !internal.getUserPostmanStatus().trim().isEmpty()) {
-            internal.setUserPostmanStatus("User with " + internal.getUserPostmanStatus());
+            internal.setUserPostmanStatus("User with " + internal.getUserPostmanStatus().toUpperCase());
         }
     }
 }
