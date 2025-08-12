@@ -10,7 +10,6 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class PostmanClientResponse {
     private Long id;
     private String name;

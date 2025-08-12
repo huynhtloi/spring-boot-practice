@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @JsonIgnoreProperties(value = {"id"},ignoreUnknown = true)
 public class PostmanRequest {
     private Long id;
