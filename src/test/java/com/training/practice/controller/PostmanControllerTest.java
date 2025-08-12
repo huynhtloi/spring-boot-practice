@@ -31,7 +31,6 @@ import com.training.practice.PracticeApplication;
 import com.training.practice.config.SecurityConfig;
 import com.training.practice.dto.backend.PostmanRequest;
 import com.training.practice.dto.backend.PostmanResponse;
-import com.training.practice.dto.external.PostmanClientResponse;
 import com.training.practice.service.PostmanClientService;
 
 /**
@@ -55,7 +54,6 @@ class PostmanControllerTest {
 
     private PostmanResponse mockResponse;
     private PostmanRequest mockRequest;
-    private PostmanClientResponse mockClientResponse;
 
     @BeforeEach
     void setUp() {
@@ -65,8 +63,6 @@ class PostmanControllerTest {
 
         mockResponse = new PostmanResponse(1L, "John Doe", "john@example.com", "ACTIVE", roles, null, null);
         mockRequest = new PostmanRequest(null, "Jane Doe", "jane@example.com", "ACTIVE", roles);
-        
-        mockClientResponse = new PostmanClientResponse(123L, "John Doe", "john@example.com", "active", roles, null, null);
     }
 
     @Test

@@ -14,7 +14,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.TestPropertySource;
 
 import com.training.practice.client.PostmanClient;
-import com.training.practice.dto.backend.PostmanResponse;
 import com.training.practice.dto.external.PostmanClientResponse;
 import com.training.practice.mapper.PostmanClientMapper;
 import com.training.practice.service.PostmanClientService;
@@ -38,7 +37,6 @@ class PostmanClientSimpleIntegrationTest {
     @MockitoBean
     private PostmanClient postmanClient;
 
-    private PostmanResponse mockResponse;
     private PostmanClientResponse mockClientResponse;
 
     @BeforeEach
@@ -46,7 +44,6 @@ class PostmanClientSimpleIntegrationTest {
         Map<String, Boolean> roles = new HashMap<>();
         roles.put("USER", true);
 
-        mockResponse = new PostmanResponse(1L, "Integration Test User", "integration@test.com", "ACTIVE", roles, null, null);
         mockClientResponse = new PostmanClientResponse(1L, "Integration Test User", "integration@test.com", "active", roles, null, null);
     }
 

@@ -21,9 +21,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
-import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
 import com.training.practice.client.PostmanClient;
-import com.training.practice.config.PostmanClientConfig;
 import com.training.practice.dto.backend.PostmanRequest;
 import com.training.practice.dto.backend.PostmanResponse;
 
@@ -38,9 +36,6 @@ class PostmanClientServiceTest {
 
     @Autowired    
     private PostmanClientService postmanClientService;
-
-    @Autowired
-    private PostmanClientConfig postmanClientConfig;
 
     private PostmanRequest mockRequest;
 
